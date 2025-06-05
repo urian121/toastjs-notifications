@@ -1,19 +1,32 @@
 /**
  * ToastJS - Modern Toast Notification Library
- * Version: 1.0.5
- * Author: Urian Viera
- * License: MIT
+ * ==========================================
+ * 
+ * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
+ * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
+ * 
+ * @version     1.0.6
+ * @author      Urian Viera
+ * @website     https://www.urianviera.com
+ * @youtube     https://www.youtube.com/WebDeveloperUrianViera
+ * @email       urian1213viera@gmail.com
+ * @donate      https://www.paypal.com/donate/?hosted_button_id=4SV78MQJJH3VE
+ * @license     MIT
+ * @copyright   © 2025 Urian Viera. Todos los derechos reservados.
+ * 
+ * @repository  https://github.com/urian121/toastjs-notifications
+ * @npm         https://www.npmjs.com/package/toastjs-notifications
  */
 
 (function (global) {
   "use strict";
 
-  const ANIMATION_DURATION = 300;
+  const ANIMATION_DURATION = 1000;
 
   // Constructor principal
   function ToastJS(options = {}) {
     this.options = {
-      position: options.position || "top-left",
+      position: options.position || "top-right",
       duration: options.duration || 4000,
       maxToasts: options.maxToasts || 5,
       ...options,
@@ -230,11 +243,14 @@
       document.head.appendChild(styleSheet);
     },
 
-    createContainer: function () {
-      if (this.container) return;
+    createContainer: function (position = this.options.position) {
+      if (this.container) {
+        this.container.className = `toastjs-container ${position}`;
+        return;
+      }
 
       this.container = document.createElement("div");
-      this.container.className = `toastjs-container ${this.options.position}`;
+      this.container.className = `toastjs-container ${position}`;
       this.container.id = "toastjs-container";
       document.body.appendChild(this.container);
     },
@@ -252,7 +268,10 @@
       };
 
       const toastConfig = config[type] || config.info;
-      const duration = options.duration || this.options.duration;
+      const duration = options.duration ?? this.options.duration;
+      const position = options.position ?? this.options.position;
+
+      this.createContainer(position); // Actualiza el contenedor si es necesario
 
       const toast = document.createElement("div");
       toast.className = `my_toast ${toastConfig.class}`;
@@ -262,22 +281,16 @@
         <span class="close-toast">×</span>
       `;
 
-
-      // Event listeners
       const closeBtn = toast.querySelector(".close-toast");
       closeBtn.addEventListener("click", () => this.remove(toast));
 
-      // Auto-remove
       if (duration > 0) {
         setTimeout(() => {
-          if (toast.parentNode) {
-            this.remove(toast);
-          }
+          if (toast.parentNode) this.remove(toast);
         }, duration);
       }
 
-      // Add to container
-      if (this.options.position.includes("bottom")) {
+      if (position.includes("bottom")) {
         this.container.appendChild(toast);
       } else {
         this.container.insertBefore(toast, this.container.firstChild);

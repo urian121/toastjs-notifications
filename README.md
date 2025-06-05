@@ -4,7 +4,6 @@
 [![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/toastjs-notifications)
 [![npm](https://img.shields.io/npm/dt/toastjs-notifications.svg)](https://www.npmjs.com/package/toastjs-notifications)
 
-
 ✨ La librería de notificaciones toast más elegante y minimalista para tu aplicación web. Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional. ¡Haz que tus notificaciones destaquen con estilo! 🚀
 
 ## 📦 Instalación
@@ -17,10 +16,10 @@ npm install toastjs-notifications
 ### CDN
 ```html
 <!-- Usando unpkg -->
-<script src="https://unpkg.com/toastjs-notifications@1.0.4"></script>
+<script src="https://unpkg.com/toastjs-notifications@1.0.6"></script>
 
 <!-- O usando jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.4"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.6"></script>
 ```
 
 ## 🚀 Uso Básico
@@ -36,23 +35,32 @@ Toast.error('Error');
 Toast.clear();
 ```
 
-## 🎨 Diferentes Posiciones
+## 🎨 Posicionamiento Dinámico
 
-ToastJS soporta múltiples posiciones para mostrar las notificaciones:
+Ahora puedes definir la posición directamente desde el objeto de opciones en cada llamada:
 
 ```javascript
-// Crear toast en diferentes posiciones
-const topRightToast = Toast.create({ position: 'top-right' });
-topRightToast.success('¡Toast en la esquina superior derecha!');
+Toast.error('Error crítico', {
+  duration: 2000,
+  position: 'top-center'
+});
 
-const bottomCenterToast = Toast.create({ position: 'bottom-center' });
-bottomCenterToast.info('Toast centrado en la parte inferior');
+Toast.success('Guardado exitoso', {
+  position: 'bottom-right'
+});
 ```
 
-Posiciones disponibles:
+También puedes seguir usando instancias personalizadas si prefieres un control global:
+
+```javascript
+const bottomLeftToast = Toast.create({ position: 'bottom-left' });
+bottomLeftToast.info('Este aparece abajo a la izquierda');
+```
+
+### Posiciones disponibles:
 - `top-left`
 - `top-center`
-- `top-right`
+- `top-right` (por defecto)
 - `bottom-left`
 - `bottom-center`
 - `bottom-right`
@@ -61,43 +69,40 @@ Posiciones disponibles:
 
 ### Duración Personalizada por Toast
 
-Cada método `Toast` (`info`, `success`, `warning`, `error`) puede recibir un segundo parámetro con opciones personalizadas, como la duración:
-
 ```javascript
 // Toast con duración de 2 segundos
-Toast.error('Error: algo salió mal', { duration: 2000 });
+Toast.warning('Duración personalizada', { duration: 2000 });
 
-// Toast que se mantiene visible hasta que el usuario lo cierre
-Toast.warning('Este mensaje no se cierra automáticamente', { duration: 0 });
-
+// Toast persistente (requiere cierre manual)
+Toast.info('Este mensaje no se cierra solo', { duration: 0 });
 ```
 
-### Instancia Personalizada
+### Instancia Personalizada Global
 ```javascript
 const customToast = Toast.create({
   position: 'bottom-right',
-  duration: 2000,
+  duration: 2500,
   maxToasts: 3
 });
+customToast.success('¡Toast personalizado!');
 ```
 
 ## 🛠️ Opciones de Configuración
 
-| Opción | Tipo | Default | Descripción |
-|--------|------|---------|-------------|
-| position | string | 'top-left' | Posición del toast ('top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right') |
-| duration | number | 4000 | Duración en milisegundos (0 para persistente) |
-| maxToasts | number | 5 | Número máximo de toasts simultáneos |
+| Opción      | Tipo     | Default       | Descripción                                                         |
+| ----------- | -------- | ------------- | ------------------------------------------------------------------- |
+| `position`  | `string` | `'top-right'` | Posición del toast (`top-left`, `top-center`, `bottom-right`, etc.) |
+| `duration`  | `number` | `4000`        | Duración en milisegundos (0 para persistente)                       |
+| `maxToasts` | `number` | `5`           | Número máximo de toasts mostrados simultáneamente                   |
 
 ## 📱 Características
 
 - 🎯 Diseño moderno y responsive
-- 🌈 Diferentes tipos de notificaciones (info, success, warning, error)
-- 📍 Múltiples posiciones de visualización
+- 🌈 Tipos: `info`, `success`, `warning`, `error`
+- 📍 Posicionamiento dinámico por toast o instancia
 - ⚡ Animaciones suaves
 - 🎨 Personalizable
-- 📱 Totalmente responsive
-- 🚀 Sin dependencias
+- 🚀 Sin dependencias externas
 - 💪 Soporte para múltiples instancias
 
 ## 📝 Ejemplo Completo
@@ -107,17 +112,19 @@ const customToast = Toast.create({
 <html>
 <head>
   <title>ToastJS Demo</title>
-  <script src="https://unpkg.com/toastjs-notifications"></script>
+  <script src="https://unpkg.com/toastjs-notifications@1.0.6"></script>
 </head>
 <body>
-  <button onclick="Toast.success('¡Operación exitosa!')">
+  <button onclick="Toast.success('¡Operación exitosa!', { position: 'bottom-center' })">
     Mostrar Toast
   </button>
 
   <script>
-    // Toast de bienvenida
     setTimeout(() => {
-      Toast.success('¡Bienvenido a ToastJS! 🎉');
+      Toast.success('¡Bienvenido a ToastJS! 🎉', {
+        duration: 3000,
+        position: 'top-center'
+      });
     }, 1000);
   </script>
 </body>
@@ -126,8 +133,9 @@ const customToast = Toast.create({
 
 ## 🤝 Únete y Contribuye
 
-Si encuentras algún problema o tienes una idea para mejorar el paquete, por favor abre un issue o envía un pull request
-en GitHub: https://github.com/urian121/toastjs-notifications
+¿Tienes una idea o encontraste un bug? ¡Contribuye!
+
+🔗 GitHub: [github.com/urian121/toastjs-notifications](https://github.com/urian121/toastjs-notifications)
 
 ## 👨‍💻 Desarrollador
 
@@ -135,18 +143,14 @@ en GitHub: https://github.com/urian121/toastjs-notifications
 🌐 [urianviera.com](https://www.urianviera.com)  
 📺 [YouTube](https://www.youtube.com/WebDeveloperUrianViera)  
 💌 [urian1213viera@gmail.com](mailto:urian1213viera@gmail.com)  
-☕ [¡Apóyame en PayPal!](https://www.paypal.com/donate/?hosted_button_id=4SV78MQJJH3VE)
+☕ [Apóyame en PayPal](https://www.paypal.com/donate/?hosted_button_id=4SV78MQJJH3VE)
 
-## Copyright
+## 🪪 Licencia
 
-© 2024 Urian Viera. Todos los derechos reservados.
-
-## License
-
-Licensed under MIT
+MIT © 2025 Urian Viera
 
 [![GitHub](https://img.shields.io/badge/GitHub-urian121/toastjs--notifications-181717?logo=github&style=flat-square)](https://github.com/urian121/toastjs-notifications)
 
-## Agradecimientos
+## 🙌 Agradecimientos
 
-¡Gracias a todos los **Devs** 👨‍💻 que han utilizado y contribuido al desarrollo de **toastjs-notifications**! Su apoyo y retroalimentación son fundamentales para mejorar continuamente este paquete.
+Gracias a todos los **Devs** 👨‍💻 que han usado y apoyado **ToastJS**. Tu feedback es clave para mejorar la librería.
