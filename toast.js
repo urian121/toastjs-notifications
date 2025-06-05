@@ -32,7 +32,7 @@
       if (document.getElementById("toastjs-styles")) return;
 
       const styles = `
-            #toast-container {
+    #toast-container {
       position: fixed;
       top: 20px;
       left: 20px;
@@ -102,12 +102,6 @@
         font-size: 12px;
         right: 8px;
         top: 8px;
-      }
-
-      .demo-button {
-        padding: 10px 16px;
-        font-size: 13px;
-        margin-left: 8px !important;
       }
     }
 
@@ -202,30 +196,6 @@
       }
     }
 
-    /* Estilos para el botón de demo */
-    .demo-button {
-      background: #6366f1;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
-    }
-
-    .demo-button:hover {
-      background: #5b5bd6;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-    }
-
-    .demo-button:active {
-      transform: translateY(0);
-    }
-
     /* Variantes de toast */
     .my_toast.success {
       border-left-color: #10b981;
@@ -250,7 +220,7 @@
     .my_toast.error .toast-icon {
       background: #ef4444;
     }
-      `;
+    `;
 
       const styleSheet = document.createElement("style");
       styleSheet.id = "toastjs-styles";
@@ -283,15 +253,16 @@
       const duration = options.duration || this.options.duration;
 
       const toast = document.createElement("div");
-      toast.className = `toastjs-toast ${toastConfig.class}`;
+      toast.className = `my_toast ${toastConfig.class}`;
       toast.innerHTML = `
-        <div class="toastjs-icon ${toastConfig.class}">${toastConfig.icon}</div>
-        <div class="toastjs-content">${message}</div>
-        <span class="toastjs-close">×</span>
+        <div class="toast-icon">${toastConfig.icon}</div>
+        <div class="toast-content">${message}</div>
+        <span class="close-toast">×</span>
       `;
 
+
       // Event listeners
-      const closeBtn = toast.querySelector(".toastjs-close");
+      const closeBtn = toast.querySelector(".close-toast");
       closeBtn.addEventListener("click", () => this.remove(toast));
 
       // Auto-remove
@@ -325,14 +296,14 @@
     },
 
     removeOldest: function () {
-      const oldestToast = this.container.querySelector(".toastjs-toast");
+      const oldestToast = this.container.querySelector(".toast");
       if (oldestToast) {
         this.remove(oldestToast);
       }
     },
 
     clear: function () {
-      const toasts = this.container.querySelectorAll(".toastjs-toast");
+      const toasts = this.container.querySelectorAll(".toast");
       toasts.forEach((toast) => this.remove(toast));
     },
 

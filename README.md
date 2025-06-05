@@ -59,13 +59,17 @@ Posiciones disponibles:
 
 ## ⚙️ Configuración Avanzada
 
-### Duración Personalizada
-```javascript
-// Toast que dura 10 segundos
-Toast.success('Mensaje que dura 10 segundos', { duration: 10000 });
+### Duración Personalizada por Toast
 
-// Toast persistente (no se cierra automáticamente)
-Toast.info('Este toast no se cierra solo', { duration: 0 });
+Cada método `Toast` (`info`, `success`, `warning`, `error`) puede recibir un segundo parámetro con opciones personalizadas, como la duración:
+
+```javascript
+// Toast con duración de 2 segundos
+Toast.error('Error: algo salió mal', { duration: 2000 });
+
+// Toast que se mantiene visible hasta que el usuario lo cierre
+Toast.warning('Este mensaje no se cierra automáticamente', { duration: 0 });
+
 ```
 
 ### Instancia Personalizada
