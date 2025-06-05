@@ -1,8 +1,8 @@
 # 🎉 ToastJS - Modern Toast Notifications Library
 
-[![npm version](https://img.shields.io/npm/v/nextjs-toast-notify.svg?style=flat-square)](https://www.npmjs.com/package/nextjs-toast-notify)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/nextjs-toast-notify)
-[![npm](https://img.shields.io/npm/dt/nextjs-toast-notify.svg)](https://www.npmjs.com/package/nextjs-toast-notify)
+[![npm version](https://img.shields.io/npm/v/toastjs-notifications.svg?style=flat-square)](https://www.npmjs.com/package/toastjs-notifications)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/toastjs-notifications)
+[![npm](https://img.shields.io/npm/dt/toastjs-notifications.svg)](https://www.npmjs.com/package/toastjs-notifications)
 
 
 ✨ La librería de notificaciones toast más elegante y minimalista para tu aplicación web. Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional. ¡Haz que tus notificaciones destaquen con estilo! 🚀
@@ -123,7 +123,7 @@ const customToast = Toast.create({
 ## 🤝 Únete y Contribuye
 
 Si encuentras algún problema o tienes una idea para mejorar el paquete, por favor abre un issue o envía un pull request
-en GitHub: https://github.com/urian121/nextjs-toast-notify
+en GitHub: https://github.com/urian121/toastjs-notifications
 
 ## 👨‍💻 Desarrollador
 
@@ -141,8 +141,8 @@ en GitHub: https://github.com/urian121/nextjs-toast-notify
 
 Licensed under MIT
 
-[![GitHub](https://img.shields.io/badge/GitHub-urian121/nextjs--toast--notify-181717?logo=github&style=flat-square)](https://github.com/urian121/nextjs-toast-notify)
+[![GitHub](https://img.shields.io/badge/GitHub-urian121/toastjs--notifications-181717?logo=github&style=flat-square)](https://github.com/urian121/toastjs-notifications)
 
 ## Agradecimientos
 
-¡Gracias a todos los **Devs** 👨‍💻 que han utilizado y contribuido al desarrollo de **Nextjs Toast Notify**! Su apoyo y retroalimentación son fundamentales para mejorar continuamente este paquete.
+¡Gracias a todos los **Devs** 👨‍💻 que han utilizado y contribuido al desarrollo de **toastjs-notifications**! Su apoyo y retroalimentación son fundamentales para mejorar continuamente este paquete.
