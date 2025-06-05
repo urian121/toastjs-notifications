@@ -17,10 +17,10 @@ npm install toastjs-notifications
 ### CDN
 ```html
 <!-- Usando unpkg -->
-<script src="https://unpkg.com/toastjs-notifications"></script>
+<script src="https://unpkg.com/toastjs-notifications@1.0.4"></script>
 
 <!-- O usando jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.4"></script>
 ```
 
 ## 🚀 Uso Básico
