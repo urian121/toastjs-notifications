@@ -32,7 +32,7 @@
       if (document.getElementById("toastjs-styles")) return;
 
       const styles = `
-    #toast-container {
+    #toastjs-container {
       position: fixed;
       top: 20px;
       left: 20px;
@@ -46,7 +46,7 @@
     }
 
     @media (max-width: 768px) {
-      #toast-container {
+      #toastjs-container {
         left: 10px;
         right: 10px;
         top: 10px;
@@ -76,7 +76,7 @@
     }
 
     @media (max-width: 480px) {
-      #toast-container {
+      #toastjs-container {
         left: 8px;
         right: 8px;
         top: 8px;
