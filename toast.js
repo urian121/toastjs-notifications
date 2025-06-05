@@ -1,12 +1,14 @@
 /**
  * ToastJS - Modern Toast Notification Library
- * Version: 1.0.0
+ * Version: 1.0.5
  * Author: Urian Viera
  * License: MIT
  */
 
 (function (global) {
   "use strict";
+
+  const ANIMATION_DURATION = 300;
 
   // Constructor principal
   function ToastJS(options = {}) {
@@ -292,18 +294,18 @@
           toast.remove();
           this.toastCount--;
         }
-      }, 300);
+      }, ANIMATION_DURATION);
     },
 
     removeOldest: function () {
-      const oldestToast = this.container.querySelector(".toast");
+      const oldestToast = this.container.querySelector(".my_toast");
       if (oldestToast) {
         this.remove(oldestToast);
       }
     },
 
     clear: function () {
-      const toasts = this.container.querySelectorAll(".toast");
+      const toasts = this.container.querySelectorAll(".my_toast");
       toasts.forEach((toast) => this.remove(toast));
     },
 
