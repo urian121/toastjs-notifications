@@ -16,10 +16,10 @@ npm install toastjs-notifications
 ### CDN
 ```html
 <!-- Usando unpkg -->
-<script src="https://unpkg.com/toastjs-notifications@1.0.6"></script>
+<script src="https://unpkg.com/toastjs-notifications@1.0.7"></script>
 
 <!-- O usando jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.6"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.7"></script>
 ```
 
 ## 🚀 Uso Básico
@@ -112,13 +112,13 @@ customToast.success('¡Toast personalizado!');
 <html>
 <head>
   <title>ToastJS Demo</title>
-  <script src="https://unpkg.com/toastjs-notifications@1.0.6"></script>
 </head>
 <body>
   <button onclick="Toast.success('¡Operación exitosa!', { position: 'bottom-center' })">
     Mostrar Toast
   </button>
 
+  <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.7"></script>
   <script>
     setTimeout(() => {
       Toast.success('¡Bienvenido a ToastJS! 🎉', {

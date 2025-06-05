@@ -1,11 +1,11 @@
 /**
- * ToastJS - Modern Toast Notification Library
+ * ToastJS - Modern Toast Notification Library (FIXED VERSION)
  * ==========================================
- * 
+ *
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
- * 
- * @version     1.0.6
+ *
+ * @version     1.0.7
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -13,15 +13,12 @@
  * @donate      https://www.paypal.com/donate/?hosted_button_id=4SV78MQJJH3VE
  * @license     MIT
  * @copyright   © 2025 Urian Viera. Todos los derechos reservados.
- * 
- * @repository  https://github.com/urian121/toastjs-notifications
- * @npm         https://www.npmjs.com/package/toastjs-notifications
  */
 
 (function (global) {
   "use strict";
 
-  const ANIMATION_DURATION = 1000;
+  const ANIMATION_DURATION = 300;
 
   // Constructor principal
   function ToastJS(options = {}) {
@@ -47,26 +44,90 @@
       if (document.getElementById("toastjs-styles")) return;
 
       const styles = `
-    #toastjs-container {
+    /* Base container styles */
+    .toastjs-container {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      right: 20px;
       display: flex;
       flex-direction: column;
       gap: 12px;
       z-index: 1000;
       max-width: 450px;
       width: calc(100% - 40px);
+      pointer-events: none;
     }
 
+    /* Position variants */
+    .toastjs-container.top-left {
+      top: 20px;
+      left: 20px;
+    }
+
+    .toastjs-container.top-center {
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .toastjs-container.top-right {
+      top: 20px;
+      right: 20px;
+    }
+
+    .toastjs-container.bottom-left {
+      bottom: 20px;
+      left: 20px;
+      flex-direction: column-reverse;
+    }
+
+    .toastjs-container.bottom-center {
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: column-reverse;
+    }
+
+    .toastjs-container.bottom-right {
+      bottom: 20px;
+      right: 20px;
+      flex-direction: column-reverse;
+    }
+
+    .toastjs-container.center {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Mobile responsive */
     @media (max-width: 768px) {
-      #toastjs-container {
-        left: 10px;
-        right: 10px;
-        top: 10px;
+      .toastjs-container {
         width: calc(100% - 20px);
         max-width: none;
+      }
+
+      .toastjs-container.top-left,
+      .toastjs-container.top-center,
+      .toastjs-container.top-right {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        transform: none;
+      }
+
+      .toastjs-container.bottom-left,
+      .toastjs-container.bottom-center,
+      .toastjs-container.bottom-right {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        transform: none;
+      }
+
+      .toastjs-container.center {
+        top: 50%;
+        left: 10px;
+        right: 10px;
+        transform: translateY(-50%);
       }
 
       .my_toast {
@@ -91,11 +152,29 @@
     }
 
     @media (max-width: 480px) {
-      #toastjs-container {
+      .toastjs-container {
+        width: calc(100% - 16px);
+      }
+
+      .toastjs-container.top-left,
+      .toastjs-container.top-center,
+      .toastjs-container.top-right {
         left: 8px;
         right: 8px;
         top: 8px;
-        width: calc(100% - 16px);
+      }
+
+      .toastjs-container.bottom-left,
+      .toastjs-container.bottom-center,
+      .toastjs-container.bottom-right {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+      }
+
+      .toastjs-container.center {
+        left: 8px;
+        right: 8px;
       }
 
       .my_toast {
@@ -139,21 +218,23 @@
       align-items: center;
       width: 100%;
       box-sizing: border-box;
+      pointer-events: auto;
     }
 
     .toast-icon {
       position: absolute;
-      left: 8px;
+      left: 16px;
       top: 50%;
       transform: translateY(-50%);
-      width: 35px;
-      height: 35px;
+      width: 20px;
+      height: 20px;
       background: #6366f1;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
+      font-size: 12px;
     }
 
     .toast-content {
@@ -175,7 +256,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 25px;
+      font-size: 16px;
       font-weight: 500;
       cursor: pointer;
       color: #9ca3af;
@@ -188,15 +269,48 @@
       transform: scale(1.1);
     }
 
+    /* Animations for different positions */
     @keyframes slideInLeft {
       0% {
         opacity: 0;
         transform: translateX(-100px) scale(0.9);
       }
-
       to {
         opacity: 1;
         transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes slideInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(100px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes slideInTop {
+      0% {
+        opacity: 0;
+        transform: translateY(-100px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes slideInBottom {
+      0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
     }
 
@@ -244,6 +358,7 @@
     },
 
     createContainer: function (position = this.options.position) {
+      // Si el contenedor ya existe, actualizamos su clase
       if (this.container) {
         this.container.className = `toastjs-container ${position}`;
         return;
@@ -271,7 +386,8 @@
       const duration = options.duration ?? this.options.duration;
       const position = options.position ?? this.options.position;
 
-      this.createContainer(position); // Actualiza el contenedor si es necesario
+      // Actualiza el contenedor para la nueva posición
+      this.createContainer(position);
 
       const toast = document.createElement("div");
       toast.className = `my_toast ${toastConfig.class}`;
@@ -290,6 +406,7 @@
         }, duration);
       }
 
+      // Insertar según la posición
       if (position.includes("bottom")) {
         this.container.appendChild(toast);
       } else {
