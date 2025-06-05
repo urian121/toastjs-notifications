@@ -16,10 +16,10 @@ npm install toastjs-notifications
 ### CDN
 ```html
 <!-- Usando unpkg -->
-<script src="https://unpkg.com/toastjs-notifications@1.0.7"></script>
+<script src="https://unpkg.com/toastjs-notifications@1.0.8"></script>
 
 <!-- O usando jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.7"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.8"></script>
 ```
 
 ## 🚀 Uso Básico
@@ -50,13 +50,6 @@ Toast.success('Guardado exitoso', {
 });
 ```
 
-También puedes seguir usando instancias personalizadas si prefieres un control global:
-
-```javascript
-const bottomLeftToast = Toast.create({ position: 'bottom-left' });
-bottomLeftToast.info('Este aparece abajo a la izquierda');
-```
-
 ### Posiciones disponibles:
 - `top-left`
 - `top-center`
@@ -80,20 +73,14 @@ Toast.info('Este mensaje no se cierra solo', { duration: 0 });
 ### Instancia Personalizada Global
 ```javascript
 const customToast = Toast.create({
-  position: 'bottom-right',
-  duration: 2500,
-  maxToasts: 3
+  position: 'bottom-right', // Posición del toast
+  duration: 2500, // Duración en milisegundos
+  maxToasts: 3 // Número máximo de toasts mostrados simultáneamente
 });
 customToast.success('¡Toast personalizado!');
 ```
 
-## 🛠️ Opciones de Configuración
 
-| Opción      | Tipo     | Default       | Descripción                                                         |
-| ----------- | -------- | ------------- | ------------------------------------------------------------------- |
-| `position`  | `string` | `'top-right'` | Posición del toast (`top-left`, `top-center`, `bottom-right`, etc.) |
-| `duration`  | `number` | `4000`        | Duración en milisegundos (0 para persistente)                       |
-| `maxToasts` | `number` | `5`           | Número máximo de toasts mostrados simultáneamente                   |
 
 ## 📱 Características
 
@@ -118,7 +105,7 @@ customToast.success('¡Toast personalizado!');
     Mostrar Toast
   </button>
 
-  <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.8"></script>
   <script>
     setTimeout(() => {
       Toast.success('¡Bienvenido a ToastJS! 🎉', {
