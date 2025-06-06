@@ -1,7 +1,7 @@
 {
   "name": "toastjs-notifications",
-  "version": "1.0.8",
-  "description": "✨ Una librería moderna, ligera y elegante para notificaciones toast en aplicaciones web. Incluye animaciones suaves, múltiples posiciones y diseño responsive. Perfecta para proyectos con React, Vue, Angular o JavaScript vanilla.",
+  "version": "1.0.9",
+  "description": "Una librería moderna, ligera y elegante para notificaciones toast en aplicaciones web. Incluye animaciones suaves, múltiples posiciones y diseño responsive.",
   "main": "toast.js",
   "files": [
     "toast.js",
@@ -32,7 +32,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/urian121/toastjs"
+    "url": "https://github.com/urian121/toastjs-notifications"
   },
   "unpkg": "toast.min.js",
   "jsdelivr": "toast.min.js",

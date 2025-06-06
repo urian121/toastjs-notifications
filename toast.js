@@ -1,11 +1,11 @@
 /**
- * ToastJS - Modern Toast Notification Library (FIXED VERSION)
+ * ToastJS Notifications
  * ==========================================
  *
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.0.8
+ * @version     1.0.9
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -18,7 +18,7 @@
 (function (global) {
   "use strict";
 
-  const ANIMATION_DURATION = 300;
+  const ANIMATION_DURATION = 1000;
 
   // Constructor principal
   function ToastJS(options = {}) {
@@ -434,11 +434,6 @@
       }
     },
 
-    clear: function () {
-      const toasts = this.container.querySelectorAll(".my_toast");
-      toasts.forEach((toast) => this.remove(toast));
-    },
-
     // Métodos de conveniencia
     info: function (message, options) {
       return this.show(message, "info", options);
@@ -461,7 +456,7 @@
   const defaultToast = new ToastJS();
 
   // API global
-  const Toast = {
+  const showToast = {
     // Crear nueva instancia
     create: function (options) {
       return new ToastJS(options);
@@ -487,21 +482,17 @@
     error: function (message, options) {
       return defaultToast.error(message, options);
     },
-
-    clear: function () {
-      return defaultToast.clear();
-    },
   };
 
   // Exportar para diferentes entornos
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = Toast;
+    module.exports = showToast;
   } else if (typeof define === "function" && define.amd) {
     define(function () {
-      return Toast;
+      return showToast;
     });
   } else {
-    global.Toast = Toast;
+    global.showToast = showToast;
     global.ToastJS = ToastJS;
   }
 })(typeof window !== "undefined" ? window : this);

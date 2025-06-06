@@ -1,38 +1,40 @@
-# 🎉 ToastJS - Modern Toast Notifications Library
+# 🎉 ToastJS Notifications
 
 [![npm version](https://img.shields.io/npm/v/toastjs-notifications.svg?style=flat-square)](https://www.npmjs.com/package/toastjs-notifications)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/toastjs-notifications)
 [![npm](https://img.shields.io/npm/dt/toastjs-notifications.svg)](https://www.npmjs.com/package/toastjs-notifications)
 
-✨ La librería de notificaciones toast más elegante y minimalista para tu aplicación web. Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional. ¡Haz que tus notificaciones destaquen con estilo! 🚀
+**ToastJS Notifications** es la librería de notificaciones toast más elegante y minimalista para tu aplicación web. Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
 
 ## 📦 Instalación
 
-### NPM
+### 📦 npm
 ```bash
 npm install toastjs-notifications
 ```
 
-### CDN
-```html
-<!-- Usando unpkg -->
-<script src="https://unpkg.com/toastjs-notifications@1.0.8"></script>
+### 📦 CDN
+Puedes usar ToastJS a través de CDN. Aquí tienes dos opciones:
 
-<!-- O usando jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.8"></script>
+#### unpkg
+```html
+<script src="https://unpkg.com/toastjs-notifications@1.0.9"></script>
+```
+
+#### jsDelivr
+```html
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.9"></script>
 ```
 
 ## 🚀 Uso Básico
+Puedes usar ToastJS Notifications de la siguiente manera:
 
 ```javascript
 // Mostrar diferentes tipos de notificaciones
-Toast.info('Mensaje de información');
-Toast.success('¡Éxito!');
-Toast.warning('Advertencia');
-Toast.error('Error');
-
-// Limpiar todas las notificaciones
-Toast.clear();
+showToast.info('Mensaje de información'); // Notificación de información
+showToast.success('¡Éxito!'); // Notificación de éxito
+showToast.warning('Advertencia'); // Notificación de advertencia
+showToast.error('Error'); // Notificación de error
 ```
 
 ## 🎨 Posicionamiento Dinámico
@@ -40,17 +42,18 @@ Toast.clear();
 Ahora puedes definir la posición directamente desde el objeto de opciones en cada llamada:
 
 ```javascript
-Toast.error('Error crítico', {
+showToast.error('Error crítico', {
   duration: 2000,
   position: 'top-center'
 });
 
-Toast.success('Guardado exitoso', {
+showToast.success('Guardado exitoso', {
   position: 'bottom-right'
 });
 ```
 
 ### Posiciones disponibles:
+Estas son las posiciones disponibles para los **ToastJS Notifications**:
 - `top-left`
 - `top-center`
 - `top-right` (por defecto)
@@ -58,29 +61,16 @@ Toast.success('Guardado exitoso', {
 - `bottom-center`
 - `bottom-right`
 
-## ⚙️ Configuración Avanzada
 
 ### Duración Personalizada por Toast
 
 ```javascript
 // Toast con duración de 2 segundos
-Toast.warning('Duración personalizada', { duration: 2000 });
+showToast.warning('Duración personalizada', { duration: 2000 });
 
 // Toast persistente (requiere cierre manual)
-Toast.info('Este mensaje no se cierra solo', { duration: 0 });
+showToast.info('Este mensaje no se cierra solo', { duration: 0 });
 ```
-
-### Instancia Personalizada Global
-```javascript
-const customToast = Toast.create({
-  position: 'bottom-right', // Posición del toast
-  duration: 2500, // Duración en milisegundos
-  maxToasts: 3 // Número máximo de toasts mostrados simultáneamente
-});
-customToast.success('¡Toast personalizado!');
-```
-
-
 
 ## 📱 Características
 
@@ -96,24 +86,32 @@ customToast.success('¡Toast personalizado!');
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>ToastJS Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToastJS Notifications - Demo</title>
 </head>
 <body>
-  <button onclick="Toast.success('¡Operación exitosa!', { position: 'bottom-center' })">
-    Mostrar Toast
-  </button>
+    <!-- Botón de demostración que muestra un toast de éxito -->
+    <button id="show-toast">
+        Mostrar Toast
+    </button>
 
-  <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.8"></script>
-  <script>
-    setTimeout(() => {
-      Toast.success('¡Bienvenido a ToastJS! 🎉', {
-        duration: 3000,
-        position: 'top-center'
+    <!-- Incluimos la librería ToastJS desde el CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.0.9"></script>
+    
+    <!-- Código de inicialización -->
+    <script>
+      document.getElementById("show-toast").addEventListener("click", () => {
+        // Mostramos un mensaje de bienvenida 8 segundos después de que la página cargue
+        showToast.success('¡Bienvenido a ToastJS Notifications! 🎉', {
+            duration: 8000, // Duración en milisegundos
+            position: 'top-center' // Posición del toast
+        });
       });
-    }, 1000);
-  </script>
+    </script>
+    
 </body>
 </html>
 ```
@@ -140,4 +138,4 @@ MIT © 2025 Urian Viera
 
 ## 🙌 Agradecimientos
 
-Gracias a todos los **Devs** 👨‍💻 que han usado y apoyado **ToastJS**. Tu feedback es clave para mejorar la librería.
+Gracias a todos los **Devs** 👨‍💻 que han usado y apoyado **ToastJS Notifications**. Tu feedback es clave para mejorar la librería.
