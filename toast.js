@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.10.0
+ * @version     1.10.1
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -202,7 +202,6 @@
     .my_toast {
       position: relative;
       background: rgba(255, 255, 255, 0.95);
-      border-left: 4px solid #6366f1;
       color: #374151;
       font-weight: 400;
       font-size: 14px;
@@ -244,9 +243,9 @@
 
     .close-toast {
       position: absolute;
-      top: 6px;
-      right: 12px;
-      font-size: 20px;
+      top: 2px;
+      right: 8px;
+      font-size: 25px;
       font-weight: 500;
       cursor: pointer;
       color: #333;
@@ -315,10 +314,6 @@
     }
 
     /* Variantes de toast */
-    .my_toast.success {
-      border-left-color: #10b981;
-    }
-
     .my_toast.success .toast-icon {
       background: #10b981;
     }
@@ -338,7 +333,58 @@
     .my_toast.error .toast-icon {
       background: #ef4444;
     }
-    `;
+
+  /* Barra de progreso */
+  .toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .toast-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: currentColor;
+    width: 100%;
+    transform: translateX(-100%);
+    animation: progress-animation var(--progress-duration, 4000ms) linear forwards;
+  }
+
+  /* Animación de la barra de progreso */
+  @keyframes progress-animation {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  /* Colores específicos para cada tipo de toast */
+  .my_toast.success .toast-progress-bar::before {
+    background: #10b981;
+  }
+
+  .my_toast.warning .toast-progress-bar::before {
+    background: #f59e0b;
+  }
+
+  .my_toast.error .toast-progress-bar::before {
+    background: #ef4444;
+  }
+
+  .my_toast.info .toast-progress-bar::before {
+    background: #6366f1;
+  }
+  `;
 
       const styleSheet = document.createElement("style");
       styleSheet.id = "toastjs-styles";
@@ -381,15 +427,20 @@
       const toast = document.createElement("div");
       toast.className = `my_toast ${toastConfig.class}`;
       toast.innerHTML = `
-        <div class="toast-icon">${toastConfig.icon}</div>
-        <div class="toast-content">${message}</div>
-        <span class="close-toast">×</span>
-      `;
+    <div class="toast-icon">${toastConfig.icon}</div>
+    <div class="toast-content">${message}</div>
+    <span class="close-toast">×</span>
+    <div class="toast-progress-bar"></div>
+  `;
 
       const closeBtn = toast.querySelector(".close-toast");
       closeBtn.addEventListener("click", () => this.remove(toast));
 
+      // Configurar la duración de la animación de la barra de progreso
       if (duration > 0) {
+        // Aplicar la duración personalizada a la animación
+        toast.style.setProperty("--progress-duration", `${duration}ms`);
+
         setTimeout(() => {
           if (toast.parentNode) this.remove(toast);
         }, duration);

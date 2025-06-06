@@ -9,32 +9,37 @@
 ## 📦 Instalación
 
 ### 📦 npm
+
 ```bash
 npm install toastjs-notifications
 ```
 
 ### 📦 CDN
+
 Puedes usar ToastJS a través de CDN. Aquí tienes dos opciones:
 
 #### unpkg
+
 ```html
-<script src="https://unpkg.com/toastjs-notifications@1.10.0"></script>
+<script src="https://unpkg.com/toastjs-notifications@1.10.1"></script>
 ```
 
 #### jsDelivr
+
 ```html
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.1"></script>
 ```
 
 ## 🚀 Uso Básico
+
 Puedes usar ToastJS Notifications de la siguiente manera:
 
 ```javascript
 // Mostrar diferentes tipos de notificaciones
-showToast.info('Mensaje de información'); // Notificación de información
-showToast.success('¡Éxito!'); // Notificación de éxito
-showToast.warning('Advertencia'); // Notificación de advertencia
-showToast.error('Error'); // Notificación de error
+showToast.info("Mensaje de información"); // Notificación de información
+showToast.success("¡Éxito!"); // Notificación de éxito
+showToast.warning("Advertencia"); // Notificación de advertencia
+showToast.error("Error"); // Notificación de error
 ```
 
 ## 🎨 Posicionamiento Dinámico
@@ -42,18 +47,20 @@ showToast.error('Error'); // Notificación de error
 Ahora puedes definir la posición directamente desde el objeto de opciones en cada llamada:
 
 ```javascript
-showToast.error('Error crítico', {
+showToast.error("Error crítico", {
   duration: 2000,
-  position: 'top-center'
+  position: "top-center",
 });
 
-showToast.success('Guardado exitoso', {
-  position: 'bottom-right'
+showToast.success("Guardado exitoso", {
+  position: "bottom-right",
 });
 ```
 
 ### Posiciones disponibles:
+
 Estas son las posiciones disponibles para los **ToastJS Notifications**:
+
 - `top-left`
 - `top-center`
 - `top-right` (por defecto)
@@ -61,15 +68,14 @@ Estas son las posiciones disponibles para los **ToastJS Notifications**:
 - `bottom-center`
 - `bottom-right`
 
-
 ### Duración Personalizada por Toast
 
 ```javascript
 // Toast con duración de 2 segundos
-showToast.warning('Duración personalizada', { duration: 2000 });
+showToast.warning("Duración personalizada", { duration: 2000 });
 
 // Toast persistente (requiere cierre manual)
-showToast.info('Este mensaje no se cierra solo', { duration: 0 });
+showToast.info("Este mensaje no se cierra solo", { duration: 0 });
 ```
 
 ## 📱 Características
@@ -87,32 +93,29 @@ showToast.info('Este mensaje no se cierra solo', { duration: 0 });
 ```html
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ToastJS Notifications - Demo</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Botón de demostración que muestra un toast de éxito -->
-    <button id="show-toast">
-        Mostrar Toast
-    </button>
+    <button id="show-toast">Mostrar Toast</button>
 
     <!-- Incluimos la librería ToastJS desde el CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.0"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.1"></script>
+
     <!-- Código de inicialización -->
     <script>
       document.getElementById("show-toast").addEventListener("click", () => {
         // Mostramos un mensaje de bienvenida 8 segundos después de que la página cargue
-        showToast.success('¡Bienvenido a ToastJS Notifications! 🎉', {
-            duration: 8000, // Duración en milisegundos
-            position: 'top-center' // Posición del toast
+        showToast.success("¡Bienvenido a ToastJS Notifications! 🎉", {
+          duration: 8000, // Duración en milisegundos
+          position: "top-center", // Posición del toast
         });
       });
     </script>
-    
-</body>
+  </body>
 </html>
 ```
 
