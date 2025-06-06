@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.10.1
+ * @version     1.10.2
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -49,7 +49,7 @@
       position: fixed;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 4px;
       z-index: 1000;
       max-width: 450px;
       width: calc(100% - 40px);
@@ -135,13 +135,6 @@
         padding: 14px 48px 14px 46px;
       }
 
-      .toast-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 11px;
-        left: 14px;
-      }
-
       .close-toast {
         width: 18px;
         height: 18px;
@@ -182,14 +175,6 @@
         padding: 12px 44px 12px 42px;
         border-radius: 10px;
       }
-
-      .toast-icon {
-        width: 16px;
-        height: 16px;
-        font-size: 10px;
-        left: 12px;
-      }
-
       .close-toast {
         width: 16px;
         height: 16px;
@@ -200,36 +185,22 @@
     }
 
     .my_toast {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       position: relative;
       background: rgba(255, 255, 255, 0.95);
       color: #374151;
       font-weight: 400;
-      font-size: 14px;
-      padding: 16px 52px 16px 52px;
+      font-size: 15px;
+      padding: 16px 52px 16px 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
       animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       opacity: 1;
       min-height: 20px;
-      display: flex;
-      align-items: center;
       width: 100%;
       box-sizing: border-box;
       pointer-events: auto;
-    }
-
-    .toast-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 12px;
     }
 
     .toast-content {
@@ -313,27 +284,6 @@
       }
     }
 
-    /* Variantes de toast */
-    .my_toast.success .toast-icon {
-      background: #10b981;
-    }
-
-    .my_toast.warning {
-      border-left-color: #f59e0b;
-    }
-
-    .my_toast.warning .toast-icon {
-      background: #f59e0b;
-    }
-
-    .my_toast.error {
-      border-left-color: #ef4444;
-    }
-
-    .my_toast.error .toast-icon {
-      background: #ef4444;
-    }
-
   /* Barra de progreso */
   .toast-progress-bar {
     position: absolute;
@@ -378,11 +328,96 @@
   }
 
   .my_toast.error .toast-progress-bar::before {
-    background: #ef4444;
+    background: #ff5e53;
   }
 
   .my_toast.info .toast-progress-bar::before {
     background: #6366f1;
+  }
+
+  /* SVG */
+    .checkmark {
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px currentColor;
+    animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+    position: relative;
+  }
+
+  .checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    fill: #fff;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  }
+
+  .checkmark__check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+  }
+
+  .checkmark__dot {
+    fill: currentColor;
+    opacity: 0;
+    animation: fadeIn 0.3s ease 1s forwards;
+  }
+
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes scale {
+    0%, 100% {
+      transform: none;
+    }
+
+    50% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+  }
+
+  @keyframes fill {
+    100% {
+      box-shadow: inset 0px 0px 0px 30px currentColor;
+    }
+  }
+
+  @keyframes fadeIn {
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Colores por tipo */
+  .checkmark.success {
+    stroke: #10b981;
+    color: #10b981;
+  }
+
+  .checkmark.warning {
+    stroke: #ff9800;
+    color: #ff9800;
+  }
+
+  .checkmark.error {
+    stroke: #f44336;
+    color: #f44336;
+  }
+
+  .checkmark.info {
+    stroke: #6366f1;
+    color: #6366f1;
   }
   `;
 
@@ -411,10 +446,37 @@
       }
 
       const config = {
-        info: { icon: "🔔", class: "info" },
-        success: { icon: "✓", class: "success" },
-        warning: { icon: "⚠", class: "warning" },
-        error: { icon: "✕", class: "error" },
+        success: {
+          icon: `<svg class="checkmark success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+    </svg>`,
+          class: "success",
+        },
+        warning: {
+          icon: `<svg class="checkmark warning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+      <line class="checkmark__check" x1="26" y1="16" x2="26" y2="30" />
+      <circle class="checkmark__dot" cx="26" cy="36" r="2" />
+    </svg>`,
+          class: "warning",
+        },
+        error: {
+          icon: `<svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+      <line class="checkmark__check" x1="16" y1="16" x2="36" y2="36" />
+      <line class="checkmark__check" x1="36" y1="16" x2="16" y2="36" />
+    </svg>`,
+          class: "error",
+        },
+        info: {
+          icon: `<svg class="checkmark info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+      <line class="checkmark__check" x1="26" y1="20" x2="26" y2="34" />
+      <circle class="checkmark__dot" cx="26" cy="16" r="2" />
+    </svg>`,
+          class: "info",
+        },
       };
 
       const toastConfig = config[type] || config.info;
@@ -427,11 +489,11 @@
       const toast = document.createElement("div");
       toast.className = `my_toast ${toastConfig.class}`;
       toast.innerHTML = `
-    <div class="toast-icon">${toastConfig.icon}</div>
-    <div class="toast-content">${message}</div>
-    <span class="close-toast">×</span>
-    <div class="toast-progress-bar"></div>
-  `;
+        ${toastConfig.icon}
+        <div class="toast-content">${message}</div>
+        <span class="close-toast">×</span>
+        <div class="toast-progress-bar"></div>
+      `;
 
       const closeBtn = toast.querySelector(".close-toast");
       closeBtn.addEventListener("click", () => this.remove(toast));
