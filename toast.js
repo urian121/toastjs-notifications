@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.0.9
+ * @version     1.10
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -202,14 +202,11 @@
     .my_toast {
       position: relative;
       background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(99, 102, 241, 0.2);
       border-left: 4px solid #6366f1;
       color: #374151;
       font-weight: 400;
       font-size: 14px;
       padding: 16px 52px 16px 52px;
-      border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
       animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       opacity: 1;
@@ -226,9 +223,8 @@
       left: 16px;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      background: #6366f1;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -250,18 +246,11 @@
       position: absolute;
       top: 6px;
       right: 12px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 500;
       cursor: pointer;
-      color: #9ca3af;
+      color: #333;
       transition: all 0.2s ease;
-      background: transparent;
     }
 
     .close-toast:hover {
