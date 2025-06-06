@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.10.2
+ * @version     1.10.3
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -187,7 +187,7 @@
     .my_toast {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 4px;
       position: relative;
       background: rgba(255, 255, 255, 0.95);
       color: #374151;

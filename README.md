@@ -21,13 +21,13 @@ Puedes usar ToastJS a través de CDN. Aquí tienes dos opciones:
 #### unpkg
 
 ```html
-<script src="https://unpkg.com/toastjs-notifications@1.10.2"></script>
+<script src="https://unpkg.com/toastjs-notifications@1.10.3"></script>
 ```
 
 #### jsDelivr
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.3"></script>
 ```
 
 ## 🚀 Uso Básico
@@ -103,7 +103,7 @@ showToast.info("Este mensaje no se cierra solo", { duration: 0 });
     <button id="show-toast">Mostrar Toast</button>
 
     <!-- Incluimos la librería ToastJS desde el CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastjs-notifications@1.10.3"></script>
 
     <!-- Código de inicialización -->
     <script>
