@@ -6,6 +6,8 @@
 
 **ToastJS Notifications** es la librería de notificaciones toast más elegante y minimalista para tu aplicación web. Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
 
+![demo](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/toastjs-notifications.gif)
+
 ## 📦 Instalación
 
 ### 📦 npm

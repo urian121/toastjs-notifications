@@ -173,7 +173,6 @@
       .my_toast {
         font-size: 12px;
         padding: 12px 44px 12px 42px;
-        border-radius: 10px;
       }
       .close-toast {
         width: 16px;
@@ -291,7 +290,6 @@
     left: 0;
     height: 3px;
     background: rgba(255, 255, 255, 0.3);
-    border-radius: 0 0 12px 12px;
     overflow: hidden;
     width: 100%;
   }

@@ -39,6 +39,7 @@
   "scripts": {
     "build": "terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o toast.min.js"
   },
+  "homepage": "https://toastjs-notifications.vercel.app",
   "devDependencies": {
     "terser": "^5.41.0"
   }
