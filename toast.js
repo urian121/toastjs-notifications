@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.11.0
+ * @version     1.11.1
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -130,7 +130,7 @@
         transform: translateY(-50%);
       }
 
-      .my_toast {
+      .my-toast {
         font-size: 13px;
         padding: 14px 48px 14px 46px;
       }
@@ -170,7 +170,7 @@
         right: 8px;
       }
 
-      .my_toast {
+      .my-toast {
         font-size: 12px;
         padding: 12px 44px 12px 42px;
       }
@@ -183,7 +183,7 @@
       }
     }
 
-    .my_toast {
+    .my-toast {
       display: flex;
       align-items: center;
       gap: 4px;
@@ -200,6 +200,7 @@
       width: 100%;
       box-sizing: border-box;
       pointer-events: auto;
+      z-index: 99999;
     }
 
     .toast-content {
@@ -317,19 +318,19 @@
   }
 
   /* Colores específicos para cada tipo de toast */
-  .my_toast.success .toast-progress-bar::before {
+  .my-toast.success .toast-progress-bar::before {
     background: #10b981;
   }
 
-  .my_toast.warning .toast-progress-bar::before {
+  .my-toast.warning .toast-progress-bar::before {
     background: #f59e0b;
   }
 
-  .my_toast.error .toast-progress-bar::before {
+  .my-toast.error .toast-progress-bar::before {
     background: #ff5e53;
   }
 
-  .my_toast.info .toast-progress-bar::before {
+  .my-toast.info .toast-progress-bar::before {
     background: #6366f1;
   }
 
@@ -485,7 +486,7 @@
       this.createContainer(position);
 
       const toast = document.createElement("div");
-      toast.className = `my_toast ${toastConfig.class}`;
+      toast.className = `my-toast ${toastConfig.class}`;
       toast.innerHTML = `
         ${toastConfig.icon}
         <div class="toast-content">${message}</div>
@@ -528,7 +529,7 @@
     },
 
     removeOldest: function () {
-      const oldestToast = this.container.querySelector(".my_toast");
+      const oldestToast = this.container.querySelector(".my-toast");
       if (oldestToast) {
         this.remove(oldestToast);
       }
