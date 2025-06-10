@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.11.11
+ * @version     1.11.14
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -62,16 +62,33 @@
       if (scriptSrc.includes("cdn.jsdelivr.net/npm/toastjs-notifications")) {
         const version = scriptSrc.match(/@(\d+\.\d+\.\d+)/)?.[1] || "latest";
         link.href = `https://cdn.jsdelivr.net/npm/toastjs-notifications@${version}/toast-notifications.min.css`;
+        document.head.appendChild(link);
+        return;
       }
+
       if (scriptSrc.includes("unpkg.com/toastjs-notifications")) {
         const version = scriptSrc.match(/@(\d+\.\d+\.\d+)/)?.[1] || "latest";
         link.href = `https://unpkg.com/toastjs-notifications@${version}/toast-notifications.css`;
-      } else {
-        // Para uso local
-        const basePath = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
-        link.href = `${basePath}/toast-notifications.min.css`;
+        document.head.appendChild(link);
+        return;
       }
 
+      // Para uso local
+      if (scriptSrc.includes("toast-notifications.min.js")) {
+        const basePath = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
+        // Extraer la parte del path antes de /js
+        const baseDir = basePath.substring(0, basePath.lastIndexOf("/js"));
+
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `${baseDir}/css/toast-notifications.css`;
+
+        document.head.appendChild(link);
+        return;
+      }
+
+      // Si no se cumple ninguna condición
+      link.href = `${basePath}/toast-notifications.css`;
       document.head.appendChild(link);
     },
 
