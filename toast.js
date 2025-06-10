@@ -5,7 +5,7 @@
  * La librería de notificaciones toast más elegante y minimalista para tu aplicación web.
  * Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
  *
- * @version     1.11.7
+ * @version     1.11.11
  * @author      Urian Viera
  * @website     https://www.urianviera.com
  * @youtube     https://www.youtube.com/WebDeveloperUrianViera
@@ -48,7 +48,7 @@
       link.id = "toastjs-styles";
       link.rel = "stylesheet";
 
-      // Detectar ruta del script actual (funciona con CDN o local)
+      // Detectar si estamos usando CDN
       const currentScript =
         document.currentScript ||
         (function () {
@@ -57,9 +57,20 @@
         })();
 
       const scriptSrc = currentScript?.src || "";
-      const basePath = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
 
-      link.href = `${basePath}/toast.css`;
+      // Si es CDN, usar la ruta correcta
+      if (scriptSrc.includes("cdn.jsdelivr.net/npm/toastjs-notifications")) {
+        const version = scriptSrc.match(/@(\d+\.\d+\.\d+)/)?.[1] || "latest";
+        link.href = `https://cdn.jsdelivr.net/npm/toastjs-notifications@${version}/toast-notifications.min.css`;
+      }
+      if (scriptSrc.includes("unpkg.com/toastjs-notifications")) {
+        const version = scriptSrc.match(/@(\d+\.\d+\.\d+)/)?.[1] || "latest";
+        link.href = `https://unpkg.com/toastjs-notifications@${version}/toast-notifications.css`;
+      } else {
+        // Para uso local
+        const basePath = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
+        link.href = `${basePath}/toast-notifications.min.css`;
+      }
 
       document.head.appendChild(link);
     },

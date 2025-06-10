@@ -1,17 +1,17 @@
 {
   "name": "toastjs-notifications",
-  "version": "1.11.7",
+  "version": "1.11.11",
   "description": "Una librería moderna, ligera y elegante para notificaciones toast en aplicaciones web. Incluye animaciones suaves, múltiples posiciones y diseño responsive.",
-  "main": "toast.min.js",
+  "main": "toast-notifications.min.js",
   "files": [
     "toast.js",
-    "toast.min.js",
-    "toast.css"
+    "toast-notifications.min.js",
+    "toast-notifications.css"
   ],
-  "unpkg": "toast.min.js",
-  "jsdelivr": "toast.min.js",
-  "unpkgCss": "toast.css",
-  "jsdelivrCss": "toast.css",
+  "unpkg": "toast-notifications.min.js",
+  "jsdelivr": "toast-notifications.min.js",
+  "unpkgCss": "toast-notifications.css",
+  "jsdelivrCss": "toast-notifications.css",
   "keywords": [
     "toast",
     "notifications",
@@ -40,7 +40,7 @@
     "url": "https://github.com/urian121/toastjs-notifications"
   },
   "scripts": {
-    "build": "terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o toast.min.js"
+    "build": "terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o toast-notifications.min.js"
   },
   "homepage": "https://toastjs-notifications.vercel.app",
   "devDependencies": {
