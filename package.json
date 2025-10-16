@@ -6,8 +6,6 @@
   "files": [
     "toast.js",
     "toast-notifications.css",
-    "toast-notifications.min.css",
-    "toast-notifications.min.js",
     "dist/toast-notifications.min.js",
     "dist/toast-notifications.min.css"
   ],
@@ -44,10 +42,11 @@
   },
   "scripts": {
     "build:prepare": "mkdir -p dist",
-    "build": "npm run build:prepare && terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o dist/toast-notifications.min.js && cp dist/toast-notifications.min.js toast-notifications.min.js",
-    "build:css": "npm run build:prepare && cleancss -o dist/toast-notifications.min.css toast-notifications.css && cp dist/toast-notifications.min.css toast-notifications.min.css",
-    "build:all": "npm run build && npm run build:css",
-    "prepublishOnly": "npm run build:all"
+    "build:js": "npm run build:prepare && terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o dist/toast-notifications.min.js",
+    "build": "npm run build:js && npm run build:css",
+    "build:css": "npm run build:prepare && cleancss -o dist/toast-notifications.min.css toast-notifications.css",
+    "build:all": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "homepage": "https://toastjs-notifications.vercel.app",
   "devDependencies": {

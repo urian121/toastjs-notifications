@@ -43,7 +43,6 @@
   max-width: var(--toast-max-width);
   width: calc(100% - var(--toast-container-width-padding));
   pointer-events: none;
-  border: 1px solid red;
 }
 .toastjs-container.top-left {
   top: var(--toast-offset);

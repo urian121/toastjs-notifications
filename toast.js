@@ -80,20 +80,36 @@
         // Si el JS está en /js, intentamos buscar el CSS en /css. De lo contrario, junto al JS.
         if (basePath.endsWith("/js")) {
           const root = basePath.slice(0, -3); // Remover '/js'
-          link.href = `${root}/css/toast-notifications.css`;
+          // Preferir CSS minificado si existe; si no, hacer fallback al no minificado
+          link.href = `${root}/css/toast-notifications.min.css`;
+          link.onerror = function () {
+            this.onerror = null;
+            this.href = `${root}/css/toast-notifications.css`;
+          };
         } else if (basePath.endsWith("/dist")) {
           // Si el JS se carga desde /dist, buscar el CSS minificado junto al JS
           link.href = `${basePath}/toast-notifications.min.css`;
         } else {
-          link.href = basePath ? `${basePath}/toast-notifications.css` : "toast-notifications.css";
+          // Preferir minificado si existe, sino fallback al no minificado
+          const minHref = basePath ? `${basePath}/toast-notifications.min.css` : "toast-notifications.min.css";
+          const normalHref = basePath ? `${basePath}/toast-notifications.css` : "toast-notifications.css";
+          link.href = minHref;
+          link.onerror = function () {
+            this.onerror = null;
+            this.href = normalHref;
+          };
         }
 
         document.head.appendChild(link);
         return;
       }
 
-      // Fallback: cargar archivo local por defecto en el mismo directorio
-      link.href = "toast-notifications.css";
+      // Fallback: preferir minificado, si falla cargar no minificado en el mismo directorio
+      link.href = "toast-notifications.min.css";
+      link.onerror = function () {
+        this.onerror = null;
+        this.href = "toast-notifications.css";
+      };
       document.head.appendChild(link);
     },
 
