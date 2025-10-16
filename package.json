@@ -2,16 +2,19 @@
   "name": "toastjs-notifications",
   "version": "1.12.0",
   "description": "Una librería moderna, ligera y elegante para notificaciones toast en aplicaciones web. Incluye animaciones suaves, múltiples posiciones y diseño responsive.",
-  "main": "toast-notifications.min.js",
+  "main": "dist/toast-notifications.min.js",
   "files": [
     "toast.js",
+    "toast-notifications.css",
+    "toast-notifications.min.css",
     "toast-notifications.min.js",
-    "toast-notifications.css"
+    "dist/toast-notifications.min.js",
+    "dist/toast-notifications.min.css"
   ],
-  "unpkg": "toast-notifications.min.js",
-  "jsdelivr": "toast-notifications.min.js",
-  "unpkgCss": "toast-notifications.css",
-  "jsdelivrCss": "toast-notifications.css",
+  "unpkg": "dist/toast-notifications.min.js",
+  "jsdelivr": "dist/toast-notifications.min.js",
+  "unpkgCss": "dist/toast-notifications.min.css",
+  "jsdelivrCss": "dist/toast-notifications.min.css",
   "keywords": [
     "toast",
     "notifications",
@@ -40,10 +43,15 @@
     "url": "https://github.com/urian121/toastjs-notifications"
   },
   "scripts": {
-    "build": "terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o toast-notifications.min.js"
+    "build:prepare": "mkdir -p dist",
+    "build": "npm run build:prepare && terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o dist/toast-notifications.min.js && cp dist/toast-notifications.min.js toast-notifications.min.js",
+    "build:css": "npm run build:prepare && cleancss -o dist/toast-notifications.min.css toast-notifications.css && cp dist/toast-notifications.min.css toast-notifications.min.css",
+    "build:all": "npm run build && npm run build:css",
+    "prepublishOnly": "npm run build:all"
   },
   "homepage": "https://toastjs-notifications.vercel.app",
   "devDependencies": {
+    "clean-css-cli": "^5.6.3",
     "terser": "^5.41.0"
   }
 }

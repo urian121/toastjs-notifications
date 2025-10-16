@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ToastJS Notifications - Demo local</title>
+    <!-- Estilos de la librería -->
+    <link id="toastjs-styles" rel="stylesheet" href="./toast-notifications.css" />
+    <!-- Estilos mínimos para la demo -->
+    <style>
+      :root {
+        --bg: #0b0f1a;
+        --card: #121826;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --primary: #6366f1;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --error: #ef4444;
+        --border: #1f2937;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(1200px circle at 10% 10%, #0f172a, #0b0f1a);
+        color: var(--text);
+      }
+      .container {
+        max-width: 960px; margin: 40px auto; padding: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.03));
+        border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(6px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      }
+      h1 { font-size: 28px; margin: 0 0 8px; }
+      p { margin: 0 0 18px; color: var(--muted); }
+      .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 20px 0; }
+      .control { display: flex; gap: 10px; align-items: center; padding: 12px; background: #0e1320; border: 1px solid var(--border); border-radius: 12px; }
+      label { font-weight: 600; color: var(--muted); }
+      select, input[type="number"] { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: #0b1222; color: var(--text); }
+      .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+      .btn { appearance: none; border: 1px solid var(--border); background: #0f172a; color: var(--text); padding: 10px 14px; border-radius: 10px; cursor: pointer; transition: transform .08s ease, background .2s ease, border-color .2s ease; }
+      .btn:hover { transform: translateY(-1px); background: #111a31; border-color: #243044; }
+      .btn-success { border-color: rgba(16,185,129,.35); }
+      .btn-warning { border-color: rgba(245,158,11,.35); }
+      .btn-error { border-color: rgba(239,68,68,.35); }
+      .footer { margin-top: 18px; color: var(--muted); font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ToastJS Notifications - Demo</h1>
+      <p>Prueba la librería localmente. Usa los controles para cambiar la posición y la duración.</p>
+
+      <div class="controls">
+        <div class="control">
+          <label for="position">Posición</label>
+          <select id="position">
+            <option value="top-right">top-right</option>
+            <option value="top-center">top-center</option>
+            <option value="top-left">top-left</option>
+            <option value="bottom-right">bottom-right</option>
+            <option value="bottom-left">bottom-left</option>
+            <option value="center">center</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="duration">Duración (ms)</label>
+          <input id="duration" type="number" min="0" step="500" value="5000" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button id="btn-info" class="btn">Mostrar Info</button>
+        <button id="btn-success" class="btn btn-success">Mostrar Éxito</button>
+        <button id="btn-warning" class="btn btn-warning">Mostrar Advertencia</button>
+        <button id="btn-error" class="btn btn-error">Mostrar Error</button>
+        <button id="btn-persist" class="btn">Persistente (duración 0)</button>
+        <button id="btn-custom" class="btn">Instancia personalizada</button>
+      </div>
+
+      <div class="footer">Tip: Puedes cerrar cada toast con la “×”.</div>
+    </div>
+
+    <!-- Librería local minificada -->
+    <script src="./dist/toast-notifications.min.js"></script>
+    <script>
+      // Referencias a los controles
+      const posSelect = document.getElementById('position');
+      const durInput = document.getElementById('duration');
+
+      // Helper para construir las opciones actuales
+      function opciones(extra = {}) {
+        const duration = Number(durInput.value || 8000);
+        const position = posSelect.value || 'top-right';
+        return { duration, position, ...extra };
+      }
+
+      // Botones básicos
+      document.getElementById('btn-info').addEventListener('click', () => {
+        showToast.info('Mensaje de información', opciones());
+      });
+      document.getElementById('btn-success').addEventListener('click', () => {
+        showToast.success('¡Éxito!', opciones());
+      });
+      document.getElementById('btn-warning').addEventListener('click', () => {
+        showToast.warning('Advertencia', opciones());
+      });
+      document.getElementById('btn-error').addEventListener('click', () => {
+        showToast.error('Error', opciones());
+      });
+
+      // Toast persistente (requiere cierre manual)
+      document.getElementById('btn-persist').addEventListener('click', () => {
+        showToast.info('Este mensaje no se cierra solo', opciones({ duration: 0 }));
+      });
+
+      // Instancia personalizada (posición fija)
+      const customToast = showToast.create({ position: 'bottom-right' });
+      document.getElementById('btn-custom').addEventListener('click', () => {
+        customToast.success('Instancia personalizada', { duration: Number(durInput.value || 8000) });
+      });
+
+      // Mensaje de bienvenida
+      showToast.success('¡Bienvenido a ToastJS Notifications! 🎉', opciones());
+    </script>
+  </body>
+  </html>

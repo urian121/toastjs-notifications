@@ -6,7 +6,7 @@
 
 **ToastJS Notifications** es la librería de notificaciones toast más elegante y minimalista para tu aplicación web. Con animaciones suaves, diseño moderno y una experiencia de usuario excepcional.
 
-![demo](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/toastjs-notifications.png)
+![demo](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/toastjs-notifications.gif)
 
 ## 📦 Instalación
 
@@ -67,7 +67,6 @@ Estas son las posiciones disponibles para los **ToastJS Notifications**:
 - `top-center`
 - `top-right` (por defecto)
 - `bottom-left`
-- `bottom-center`
 - `bottom-right`
 
 ### Duración Personalizada por Toast
@@ -79,6 +78,42 @@ showToast.warning("Duración personalizada", { duration: 2000 });
 // Toast persistente (requiere cierre manual)
 showToast.info("Este mensaje no se cierra solo", { duration: 0 });
 ```
+
+### Opciones disponibles por toast
+
+Puedes controlar el comportamiento en cada llamada usando estas opciones:
+
+- `duration` (number): tiempo en milisegundos. Si es `0`, el toast es persistente.
+- `position` (string): posición del toast. Por defecto `top-right`.
+- `closeOnClick` (boolean): si es `true`, el toast se cierra al hacer clic en cualquier parte del toast (además del botón “×”). Por defecto `false`.
+
+Ejemplo usando `closeOnClick`:
+
+```javascript
+showToast.success("Guardado exitoso", {
+  duration: 3000,
+  position: "top-center",
+  closeOnClick: true,
+});
+```
+
+
+### Múltiples instancias (opcional)
+
+Si quieres configurar una instancia con opciones por defecto diferentes:
+
+```javascript
+const myToast = new ToastJS({ position: "bottom-left", duration: 5000, closeOnClick: true });
+myToast.info("Instancia personalizada");
+```
+
+### Barra de progreso
+
+Cada toast muestra una barra de progreso que refleja su duración:
+
+- Si estableces `duration`, la barra avanza en ese tiempo y luego el toast se cierra automáticamente.
+- Si `duration` es `0` (persistente), el toast no se cierra automáticamente. La barra puede animarse con un valor por defecto visual, pero la notificación permanece hasta que la cierres manualmente.
+ - Si `duration` es `0` (persistente), el toast no se cierra automáticamente. La barra puede animarse de forma visual, pero la notificación permanece hasta que la cierres manualmente (por el botón “×” o programáticamente).
 
 ## 📱 Características
 

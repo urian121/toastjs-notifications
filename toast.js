@@ -18,18 +18,16 @@
 (function (global) {
   "use strict";
 
-  const ANIMATION_DURATION = 10000; // 10 seconds
-
   // Constructor principal
   function ToastJS(options = {}) {
     this.options = {
+      // Posición y duración por defecto
       position: options.position || "top-right",
-      duration: options.duration || 4000,
-      maxToasts: options.maxToasts || 5,
+      duration: options.duration ?? 8000,
+      closeOnClick: options.closeOnClick ?? false,
       ...options,
     };
     this.container = null;
-    this.toastCount = 0;
     this.init();
   }
 
@@ -60,55 +58,81 @@
 
       // Si es CDN, usar la ruta correcta
       if (scriptSrc.includes("cdn.jsdelivr.net/npm/toastjs-notifications")) {
-        const version = scriptSrc.match(/@(\d+\.\d+\.\d+)/)?.[1] || "latest";
-        link.href = `https://cdn.jsdelivr.net/npm/toastjs-notifications@${version}/toast-notifications.min.css`;
+        // Usar siempre la última versión del CSS minificado desde jsDelivr (carpeta dist)
+        link.href = "https://cdn.jsdelivr.net/npm/toastjs-notifications@latest/dist/toast-notifications.min.css";
         document.head.appendChild(link);
         return;
       }
 
       if (scriptSrc.includes("unpkg.com/toastjs-notifications")) {
-        const version = scriptSrc.match(/@(\d+\.\d+\.\d+)/)?.[1] || "latest";
-        link.href = `https://unpkg.com/toastjs-notifications@${version}/toast-notifications.css`;
+        // Usar siempre la última versión del CSS minificado desde unpkg (carpeta dist)
+        link.href = "https://unpkg.com/toastjs-notifications@latest/dist/toast-notifications.min.css";
         document.head.appendChild(link);
         return;
       }
 
-      // Para uso local
-      if (scriptSrc.includes("toast-notifications.min.js")) {
-        const basePath = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
-        // Extraer la parte del path antes de /js
-        const baseDir = basePath.substring(0, basePath.lastIndexOf("/js"));
+      // Para uso local: cuando el script se carga desde archivos locales
+      if (scriptSrc.includes("toast.js") || scriptSrc.includes("toast-notifications.min.js")) {
+        // Directorio donde está el JS
+        const lastSlash = scriptSrc.lastIndexOf("/");
+        const basePath = lastSlash > -1 ? scriptSrc.substring(0, lastSlash) : "";
 
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = `${baseDir}/css/toast-notifications.css`;
+        // Si el JS está en /js, intentamos buscar el CSS en /css. De lo contrario, junto al JS.
+        if (basePath.endsWith("/js")) {
+          const root = basePath.slice(0, -3); // Remover '/js'
+          link.href = `${root}/css/toast-notifications.css`;
+        } else if (basePath.endsWith("/dist")) {
+          // Si el JS se carga desde /dist, buscar el CSS minificado junto al JS
+          link.href = `${basePath}/toast-notifications.min.css`;
+        } else {
+          link.href = basePath ? `${basePath}/toast-notifications.css` : "toast-notifications.css";
+        }
 
         document.head.appendChild(link);
         return;
       }
 
-      // Si no se cumple ninguna condición
-      link.href = `${basePath}/toast-notifications.css`;
+      // Fallback: cargar archivo local por defecto en el mismo directorio
+      link.href = "toast-notifications.css";
       document.head.appendChild(link);
     },
 
     createContainer: function (position = this.options.position) {
-      // Si el contenedor ya existe, actualizamos su clase
-      if (this.container) {
-        this.container.className = `toastjs-container ${position}`;
+      // Normalizar posición: bottom-center ya no es soportada, usar bottom-right
+      const normalizedPosition = position === "bottom-center" ? "bottom-right" : position;
+
+      // 1) Revisar si ya existe un contenedor global con el id esperado
+      const containers = document.querySelectorAll('#toastjs-container');
+      if (containers.length > 0) {
+        // Si hay más de uno, eliminar duplicados y quedarnos con el primero
+        for (let i = 1; i < containers.length; i++) {
+          containers[i].remove();
+        }
+        this.container = containers[0];
+        this.container.className = `toastjs-container ${normalizedPosition}`;
         return;
       }
 
+      // 2) Si la instancia ya tiene referencia, reutilizarla (y asegurar el id único)
+      if (this.container) {
+        // Si por alguna razón el id no está, asignarlo y usarla como global única
+        this.container.id = 'toastjs-container';
+        this.container.className = `toastjs-container ${normalizedPosition}`;
+        // Asegurar que esté en el DOM
+        if (!document.body.contains(this.container)) {
+          document.body.appendChild(this.container);
+        }
+        return;
+      }
+
+      // 3) Crear un contenedor nuevo, único y global
       this.container = document.createElement("div");
-      this.container.className = `toastjs-container ${position}`;
+      this.container.className = `toastjs-container ${normalizedPosition}`;
       this.container.id = "toastjs-container";
       document.body.appendChild(this.container);
     },
 
     show: function (message, type = "info", options = {}) {
-      if (this.toastCount >= this.options.maxToasts) {
-        this.removeOldest();
-      }
 
       const config = {
         success: {
@@ -153,15 +177,27 @@
 
       const toast = document.createElement("div");
       toast.className = `my-toast ${toastConfig.class}`;
+
+      const progressMarkup = '<div class="toast-progress-bar"></div>';
+
       toast.innerHTML = `
         ${toastConfig.icon}
         <div class="toast-content">${message}</div>
-        <span class="close-toast">×</span>
-        <div class="toast-progress-bar"></div>
+        <span class="close-toast" aria-label="Cerrar notificación" tabindex="0">×</span>
+        ${progressMarkup}
       `;
+
+      // Rol accesible por tipo
+      toast.setAttribute("role", type === "info" ? "status" : "alert");
 
       const closeBtn = toast.querySelector(".close-toast");
       closeBtn.addEventListener("click", () => this.remove(toast));
+      if (options.closeOnClick ?? this.options.closeOnClick) {
+        toast.addEventListener("click", (e) => {
+          // Evita doble disparo si se hace click en el botón de cierre
+          if (!e.target.classList.contains("close-toast")) this.remove(toast);
+        });
+      }
 
       // Configurar la duración de la animación de la barra de progreso
       if (duration > 0) {
@@ -180,44 +216,44 @@
         this.container.insertBefore(toast, this.container.firstChild);
       }
 
-      this.toastCount++;
       return toast;
     },
 
     remove: function (toast) {
+      // Añade la clase de salida
       toast.classList.add("toastjs-fade-out");
-      setTimeout(() => {
+
+      // Handler que solo reacciona a la animación del propio toast
+      const onAnimationEnd = (e) => {
+        // Ignora animaciones que provienen de elementos hijos (por ejemplo, la barra de progreso)
+        if (e.target !== toast) return;
+        // Una vez termina la animación de salida del toast, lo removemos del DOM
+        toast.removeEventListener("animationend", onAnimationEnd);
         if (toast.parentNode) {
           toast.remove();
-          this.toastCount--;
         }
-      }, ANIMATION_DURATION);
-    },
+      };
 
-    removeOldest: function () {
-      const oldestToast = this.container.querySelector(".my-toast");
-      if (oldestToast) {
-        this.remove(oldestToast);
-      }
-    },
+      // Escucha el final de la animación (sin "once" para no perder el evento por bubbling de hijos)
+      toast.addEventListener("animationend", onAnimationEnd);
 
-    // Métodos de conveniencia
-    info: function (message, options) {
-      return this.show(message, "info", options);
-    },
-
-    success: function (message, options) {
-      return this.show(message, "success", options);
-    },
-
-    warning: function (message, options) {
-      return this.show(message, "warning", options);
-    },
-
-    error: function (message, options) {
-      return this.show(message, "error", options);
+      // Fallback: en caso de que el evento animationend no se dispare, asegura la eliminación
+      // El tiempo debe ser mayor al de la animación de salida (0.3s) para no cortar la animación
+      setTimeout(() => {
+        if (toast && toast.parentNode) {
+          toast.removeEventListener("animationend", onAnimationEnd);
+          toast.remove();
+        }
+      }, 600);
     },
   };
+
+  // Asignación dinámica de métodos de conveniencia al prototipo
+  ["info", "success", "warning", "error"].forEach(function (type) {
+    ToastJS.prototype[type] = function (message, options) {
+      return this.show(message, type, options);
+    };
+  });
 
   // Crear instancia global por defecto
   const defaultToast = new ToastJS();
@@ -233,23 +269,14 @@
     show: function (message, type, options) {
       return defaultToast.show(message, type, options);
     },
-
-    info: function (message, options) {
-      return defaultToast.info(message, options);
-    },
-
-    success: function (message, options) {
-      return defaultToast.success(message, options);
-    },
-
-    warning: function (message, options) {
-      return defaultToast.warning(message, options);
-    },
-
-    error: function (message, options) {
-      return defaultToast.error(message, options);
-    },
   };
+
+  // Asignación dinámica de métodos de conveniencia a la API global
+  ["info", "success", "warning", "error"].forEach(function (type) {
+    showToast[type] = function (message, options) {
+      return defaultToast.show(message, type, options);
+    };
+  });
 
   // Exportar para diferentes entornos
   if (typeof module !== "undefined" && module.exports) {
