@@ -4,7 +4,7 @@
   "description": "Una librería moderna, ligera y elegante para notificaciones toast en aplicaciones web. Incluye animaciones suaves, múltiples posiciones y diseño responsive.",
   "main": "dist/toast-notifications.min.js",
   "files": [
-    "toast.js",
+    "toastjs-notifications.js",
     "toast-notifications.css",
     "dist/toast-notifications.min.js",
     "dist/toast-notifications.min.css"
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build:prepare": "mkdir -p dist",
-    "build:js": "npm run build:prepare && terser toast.js -c toplevel=true,pure_funcs='console.log' -m -o dist/toast-notifications.min.js",
+    "build:js": "npm run build:prepare && terser toastjs-notifications.js -c toplevel=true,pure_funcs='console.log' -m -o dist/toast-notifications.min.js",
     "build": "npm run build:js && npm run build:css",
     "build:css": "npm run build:prepare && cleancss -o dist/toast-notifications.min.css toast-notifications.css",
     "build:all": "npm run build",

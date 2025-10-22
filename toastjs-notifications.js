@@ -72,7 +72,7 @@
       }
 
       // Para uso local: cuando el script se carga desde archivos locales
-      if (scriptSrc.includes("toast.js") || scriptSrc.includes("toast-notifications.min.js")) {
+      if (scriptSrc.includes("toastjs-notifications.js") || scriptSrc.includes("toast-notifications.min.js")) {
         // Directorio donde está el JS
         const lastSlash = scriptSrc.lastIndexOf("/");
         const basePath = lastSlash > -1 ? scriptSrc.substring(0, lastSlash) : "";
@@ -276,11 +276,6 @@
 
   // API global
   const showToast = {
-    // Crear nueva instancia
-    create: function (options) {
-      return new ToastJS(options);
-    },
-
     // Métodos de la instancia por defecto
     show: function (message, type, options) {
       return defaultToast.show(message, type, options);
@@ -303,6 +298,5 @@
     });
   } else {
     global.showToast = showToast;
-    global.ToastJS = ToastJS;
   }
 })(typeof window !== "undefined" ? window : this);

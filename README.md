@@ -125,8 +125,6 @@ Cada toast muestra una barra de progreso que refleja su duración:
 
 - Si estableces `duration`, la barra avanza en ese tiempo y luego el toast se cierra automáticamente.
 - Si `duration` es `0` (persistente), el toast no se cierra automáticamente. La barra puede animarse con un valor por defecto visual, pero la notificación permanece hasta que la cierres manualmente.
- - Si `duration` es `0` (persistente), el toast no se cierra automáticamente. La barra puede animarse de forma visual, pero la notificación permanece hasta que la cierres manualmente (por el botón “×” o programáticamente).
-
 
 ## 🤝 Únete y Contribuye
 
