@@ -33,7 +33,7 @@ Puedes instalar **ToastJS Notifications** a través de CDN, a continuación se m
         // Mostramos un mensaje de bienvenida 8 segundos después de que la página cargue
         showToast.success("¡Bienvenido a ToastJS Notifications! 🎉", {
           duration: 8000, // Duración en milisegundos
-          position: "top-center", // Posición del toast
+          position: "top-right", // Posición del toast
         });
       });
     </script>
