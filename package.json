@@ -38,10 +38,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/urian121/toastjs-notifications"
+    "url": "git+https://github.com/urian121/toastjs-notifications.git"
   },
   "scripts": {
-    "build:prepare": "mkdir -p dist",
+    "build:prepare": "node -e \"require('fs').mkdirSync('dist', {recursive: true})\"",
     "build:js": "npm run build:prepare && terser toastjs-notifications.js -c toplevel=true,pure_funcs='console.log' -m -o dist/toast-notifications.min.js",
     "build": "npm run build:js && npm run build:css",
     "build:css": "npm run build:prepare && cleancss -o dist/toast-notifications.min.css toast-notifications.css",
