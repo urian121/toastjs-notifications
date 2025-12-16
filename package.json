@@ -1,6 +1,6 @@
 {
   "name": "toastjs-notifications",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "description": "Una librería moderna, ligera y elegante para notificaciones toast en aplicaciones web. Incluye animaciones suaves, múltiples posiciones y diseño responsive.",
   "main": "dist/toast-notifications.min.js",
   "files": [
