@@ -35,7 +35,8 @@
   ToastJS.prototype = {
     init: function () {
       this.injectStyles();
-      this.createContainer();
+      // No crear el contenedor al inicio, solo se creará cuando se necesite mostrar un toast
+      // this.createContainer();
     },
 
     // Inyectar CSS en el DOM
@@ -117,31 +118,23 @@
       // Normalizar posición: bottom-center ya no es soportada, usar bottom-right
       const normalizedPosition = position === "bottom-center" ? "bottom-right" : position;
 
-      // 1) Revisar si ya existe un contenedor global con el id esperado
-      const containers = document.querySelectorAll('#toastjs-container');
-      if (containers.length > 0) {
-        // Si hay más de uno, eliminar duplicados y quedarnos con el primero
-        for (let i = 1; i < containers.length; i++) {
-          containers[i].remove();
-        }
-        this.container = containers[0];
+      // 1) Si la instancia ya tiene referencia y está en el DOM, reutilizarla
+      if (this.container && document.body.contains(this.container)) {
+        // Actualizar la posición si es necesario
         this.container.className = `toastjs-container ${normalizedPosition}`;
         return;
       }
 
-      // 2) Si la instancia ya tiene referencia, reutilizarla (y asegurar el id único)
-      if (this.container) {
-        // Si por alguna razón el id no está, asignarlo y usarla como global única
-        this.container.id = 'toastjs-container';
+      // 2) Revisar si ya existe un contenedor global con el id esperado en el DOM
+      const existingContainer = document.getElementById('toastjs-container');
+      if (existingContainer && document.body.contains(existingContainer)) {
+        // Reutilizar el contenedor existente
+        this.container = existingContainer;
         this.container.className = `toastjs-container ${normalizedPosition}`;
-        // Asegurar que esté en el DOM
-        if (!document.body.contains(this.container)) {
-          document.body.appendChild(this.container);
-        }
         return;
       }
 
-      // 3) Crear un contenedor nuevo, único y global
+      // 3) Crear un contenedor nuevo (solo cuando es necesario)
       this.container = document.createElement("div");
       this.container.className = `toastjs-container ${normalizedPosition}`;
       this.container.id = "toastjs-container";
@@ -225,6 +218,12 @@
         }, duration);
       }
 
+      // Asegurar que el contenedor exista y esté visible cuando se agrega un toast
+      // createContainer ya se llamó arriba, pero nos aseguramos de que esté en el DOM
+      if (!this.container || !document.body.contains(this.container)) {
+        this.createContainer(position);
+      }
+
       // Insertar según la posición
       if (position.includes("bottom")) {
         this.container.appendChild(toast);
@@ -247,6 +246,8 @@
         toast.removeEventListener("animationend", onAnimationEnd);
         if (toast.parentNode) {
           toast.remove();
+          // Verificar si el contenedor está vacío después de eliminar el toast
+          this.checkAndHideContainer();
         }
       };
 
@@ -259,8 +260,22 @@
         if (toast && toast.parentNode) {
           toast.removeEventListener("animationend", onAnimationEnd);
           toast.remove();
+          // Verificar si el contenedor está vacío después de eliminar el toast
+          this.checkAndHideContainer();
         }
       }, 600);
+    },
+
+    // Verificar si el contenedor está vacío y eliminarlo del DOM si es necesario
+    checkAndHideContainer: function () {
+      if (this.container && this.container.children.length === 0) {
+        // Eliminar el contenedor del DOM cuando no hay toasts
+        if (this.container.parentNode) {
+          this.container.remove();
+        }
+        // Limpiar la referencia
+        this.container = null;
+      }
     },
   };
 
